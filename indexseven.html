@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>组件与实例的关系</title>
+    <script src="js/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <div>
+            <input type="text" v-model="inputValue"/>
+            <button @click="handleSubmit">提交</button>
+        </div>
+            <ul>
+                <todo-item v-for="(item,index) of list" :key="index" :cont="item"></todo-item>
+            </ul>
+
+    </div>
+    <script>
+//        实例and 组件：
+//        每一个Vue的组件，都是一个vue 实例，在vue实例中又使用了小的vue实例 任何一个vue项目
+//              都是有很多个vue实例组成的
+//            反过来，每一个vue实例也就是一个组件
+//            所以在组件中可以定义methods data computed等
+
+        Vue.component('todo-item',{
+            props:['cont'],
+            template:"<li @click='handleClick'>{{cont}}</li>",
+            methods:{
+                handleClick:function(){
+                    alert('123');
+                }
+            }
+        })
+
+//        最外层大实例：
+//        如果不定义模板template，则会使用挂载点(root)下所有的dom标签内容当作模板使用
+        new Vue({
+            el:"#root",
+            data:{
+                inputValue:"",
+                list:[],
+            },
+//            没有定义模板：
+//            template:"",
+            methods:{
+                handleSubmit:function(){
+                    this.list.push(this.inputValue);
+                    this.inputValue="";
+                }
+            }
+
+        })
+    </script>
+</body>
+</html>

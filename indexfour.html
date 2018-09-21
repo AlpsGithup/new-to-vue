@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>v-if,v-show,v-for 指令</title>
+    <script src="js/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <!--需求：hello world 显示隐藏toggle-->
+        <!--[1] v-if-->
+        <div v-if="show1">hello world1</div>
+        <!--[2] v-show-->
+        <div v-show="show2">hello world2</div>
+        <!--v-if和v-show的区别：（控制台查看）v-if 是删除 添加 div标签；v-show是添加display:none属性;-->
+
+        <!--只有data中show是true的时候，该div显示，show是false的时候div不显示-->
+        <!--对button进行事件绑定：-->
+        <button @click="handleClick1">toggle1</button>
+        <button @click="handleClick2">toggle2</button>
+        <!--[3] v-for-->
+        <!--使用v-for 时，加一个 ：key的属性，会提升每项渲染的效率，要求每一项的key值不能相同，当list的每一项
+        值都不相同时，可以用item作为Key值；但如果list有相同项时，则不能用item作为key值；可以在item 后加一个index-->
+        <!--需求：把list中的数据循环展示出来-->
+        <ul>
+            <!--item of list:循环list这个数据项，每次循环把对应的循环项放在item变量中-->
+            <!--<li v-for="item of list" :key="item">{{item}}</li>-->
+
+            <!--"(item,index) of list"表示：循环list列表，list 中每一项的内容放到item里面去，每一项的
+            下标放到index中。此时key值可以用index;理想的key值是每项都有唯一的id-->
+            <li v-for="(item,index) of list" :key="index">{{item}}</li>
+        </ul>
+
+    </div>
+    <script>
+         new Vue({
+             el:"#root",
+             data:{
+                 show1:true,
+                 show2:true,
+//                 v-for
+                 list:[1,2,3]
+             },
+             methods:{
+                 handleClick1:function () {
+                     this.show1= !this.show1;//取反 toggle
+                 },
+                 handleClick2:function () {
+                     this.show2= !this.show2;//取反 toggle
+                 }
+             }
+         })
+    </script>
+</body>
+</html>

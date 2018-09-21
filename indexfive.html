@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>TodoList功能</title>
+    <script src="js/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <!--需求：在input框中输入的内容可以在列表中显示-->
+        <div>
+            <!--双向绑定-->
+            <input type="text" v-model="inputValue"/>
+            <button @click="handleSubmit">提交</button>
+        </div>
+        <ul>
+            <!--列表中内容由list数组决定-->
+            <!--当点击提交按钮时，把input内容显示在列表中-->
+            <li v-for="(item,index) of list" :key="index">{{item}}</li>
+            <!--<li>2</li>-->
+        </ul>
+    </div>
+    <script>
+        new Vue({
+            el:"#root",
+            data:{
+                inputValue:"",
+                list:[],
+            },
+            methods:{
+                handleSubmit:function(){
+                    this.list.push(this.inputValue);
+                    this.inputValue="";
+                }
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>TodoList组件拆分</title>
+    <script src="js/vue.js"></script>
+</head>
+<body>
+    <!--组件：页面上的某一部分-->
+    <div id="root">
+        <div>
+            <input type="text" v-model="inputValue"/>
+            <button @click="handleSubmit">提交</button>
+        </div>
+        <ul>
+            <!--<li v-for="(item,index) of list" :key="index">{{item}}</li>-->
+
+            <!--显示出 item-->
+            <!--<todo-item></todo-item>-->
+
+            <!--需求：显示多个li-->
+            <!--<todo-item v-for="(item,index) of list" :key="index"></todo-item>-->
+
+            <!--希望组件中显示的内容是外部传递进来的参数：传参-->
+            <!--content值是每项item中的内容-->
+            <todo-item
+                    v-for="(item,index) of list"
+                    :key="index"
+                    :cont="item"
+                    >
+            </todo-item>
+
+        </ul>
+    </div>
+    <script>
+//        组件拆分：
+//       【1】 Vue.component：拆分组件的方法
+//        通过component定义的组件称为全局组件，这种组件在模板中任何地方通过“ <todo-item></todo-item>”都可以调用该组件
+        Vue.component("todo-item",{
+//            模板：
+//            template:"<li>item</li>"
+
+//            content：定义接受
+//            props选项：传递数据
+            props:["cont"],
+            template:"<li>{{cont}}</li>"
+
+        })
+
+//        【2】 定义局部组件  局部组件需要在Vue实例中调用该组件，必须通过components在实例中注册该组件
+//        var TodoItem={
+//            template:"<li>item</li>"
+//        }
+
+
+        new Vue({
+            el:"#root",
+//            注册局部组件：
+//            components:{
+//              'todo-item':TodoItem,
+//            },
+            data:{
+                inputValue:"",
+                list:[],
+            },
+            methods:{
+                handleSubmit:function(){
+                    this.list.push(this.inputValue);
+                    this.inputValue="";
+                }
+            }
+        })
+    </script>
+</body>
+</html>

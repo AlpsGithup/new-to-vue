@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>vue入门</title>
+    <script src="js/vue.js"></script>
+    <!--//script放头部可防止抖屏现象-->
+</head>
+<body>
+    <!--挂载点 模板实例-->
+
+    <div id="root">
+        <h2>hello {{msg}}{{number}}</h2>
+        <!--插值表达式：2个花括号-->
+        <h3 v-text="number"></h3>
+        <h3 v-html="number"></h3>
+        <h3 v-text="content"></h3>
+        <h3 v-html="content"></h3>
+        <div v-on:click="handleClick">{{content2}}</div>
+        <!--v-on可以简写为@-->
+        <div @click="handleClick">{{content2}}</div>
+    </div>
+    <!--div :挂载点-->
+    <!--挂载点内部内容：模板-->
+    <script>
+        new Vue({
+//            vue实例
+            el:"#root",
+//            template:'<h2>hello {{msg}}</h2>',  //模板
+            data:{
+                msg:"hello world",
+                number:123,
+                content:'<h2>hello</h2>',
+                content2:'hello'
+            },
+            methods:{
+                handleClick:function(){
+//                    alert(123);
+                    this.content2="world";
+                    //this 指该vue实例下data下content的内容  面向数据编程
+                }
+            }
+
+        })
+    </script>
+</body>
+</html>

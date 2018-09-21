@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>计算属性与侦听器</title>
+    <script src="js/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        姓：<input type="text" v-model="firstName"/>
+        名：<input type="text" v-model="lastName"/>
+        <!--<div>{{firstName}}{{lastName}}</div>-->
+        <!--想实现fullName=firstName+lastName   Vue实例中添加computed-->
+        <div>{{fullName}}</div>
+        <!--侦听器-->
+        <!--需求：每次姓或者名发生一次改变，count值加1-->
+        <div>{{count}}</div>
+    </div>
+    <script>
+        new Vue({
+            el:"#root",
+            data:{
+                firstName:"",
+                lastName:"",
+//                侦听
+                count:0,
+            },
+//            类似react中reselect库
+//            computed:一个属性通过其他属性计算而来,其中，如果firstName 没发生改变，lastName也没改变，那么每次
+//            使用fullName 的时候，会使用上一次计算的缓存结果，不会重新计算，只有依赖的属性其中有一个发生改变的时候才重新计算
+            computed:{
+                fullName:function(){
+                    return this.firstName+" "+this.lastName;
+                }
+            },
+//            定义侦听器：watch 侦听某一个数据的变化，一旦发生变化
+            watch:{
+//                方法1：
+//                firstName:function(){
+//                    this.count++;
+//                },
+//                lastName:function(){
+//                    this.count++;
+//                },
+//                方法2：更简便方法：侦听fullName的改变
+                fullName:function(){
+                    this.count++;
+                }
+            }
+
+
+        })
+    </script>
+</body>
+</html>
